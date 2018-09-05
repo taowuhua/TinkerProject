@@ -6,22 +6,30 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.MainActivity">
+
     <Button
         android:id="@+id/bt_adapter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="跳转到万能适配器的使用情况 " />
+
     <Button
         android:id="@+id/bt_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="获取list数据" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycle"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

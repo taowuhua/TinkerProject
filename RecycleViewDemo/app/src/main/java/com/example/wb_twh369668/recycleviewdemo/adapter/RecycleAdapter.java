@@ -65,8 +65,8 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
         name = tag.get(position).getName();
         count = tag.get(position).getCount();
         title = tag.get(position).getTitle();
-        holder.mTv1.setText(count + "");
-        holder.mTv2.setText(title);
+            holder.mTv1.setText(count + "");
+            holder.mTv2.setText(title);
         Log.i(TAG, "onBindViewHolder: ===" + title);
         Log.i(TAG, "onBindViewHolder: ===" + count);
         //自定义点击事件和长按事件
@@ -101,8 +101,8 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
 
         public RecycleViewHolder(View itemView) {
             super(itemView);
-            mTv1 = itemView.findViewById(R.id.tv1);
-            mTv2 = itemView.findViewById(R.id.tv2);
+            mTv1 = itemView.findViewById(R.id.tv_count);
+            mTv2 = itemView.findViewById(R.id.tv_name);
         }
     }
 

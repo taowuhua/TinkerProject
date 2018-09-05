@@ -1,8 +1,11 @@
 package com.example.wb_twh369668.recycleviewdemo.ui;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,11 +30,13 @@ public class MainActivity extends Activity {
     private RecyclerView mRcyV;
     private RecycleAdapter recyvleAdapter;
     private ListRecycleAdapter listRecycleAdapter;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private BookPresenter mBookPresenter = new BookPresenter(this);
     private Book book;
     private Button mBtList;
     private Button mBtUniversalAdapter;
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +44,7 @@ public class MainActivity extends Activity {
         mRcyV = findViewById(R.id.recycle);
         mBtList = findViewById(R.id.bt_list);
         mBtUniversalAdapter = findViewById(R.id.bt_adapter);
+        mSwipeRefreshLayout = findViewById(R.id.swipe_refresh);
 
         mBtList.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +57,23 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, UniversalAdapterActivity.class);
                 startActivity(intent);
+            }
+        });
+        // 顶部刷新的样式
+        mSwipeRefreshLayout.setColorScheme(android.R.color.holo_red_light, android.R.color.holo_green_light,
+                android.R.color.holo_blue_bright, android.R.color.holo_orange_light);
+        //下拉刷新
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //延迟一秒钟再执行任务
+                new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        mSwipeRefreshLayout.setRefreshing(false);     //取消刷新状态
+                        listRecycleAdapter.removeItem(0);
+                        listRecycleAdapter.notifyDataSetChanged();
+                    }
+                }, 1000);
             }
         });
         mBookPresenter.onCreate();
@@ -112,8 +135,8 @@ public class MainActivity extends Activity {
         @Override
         public void onSuccess(Book mBook) {
             book = mBook;
-            initRecycleView();
-//          initListRecycleView();
+//            initRecycleView();
+          initListRecycleView();
         }
 
         @Override
