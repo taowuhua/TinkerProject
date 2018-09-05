@@ -39,12 +39,15 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     //依赖库
     //noinspection GradleCompatible
-    implementation  'com.android.support:recyclerview-v7:25.1.0'
+    implementation 'com.android.support:recyclerview-v7:25.1.0'
     //retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.1.0'
     //gson依赖
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
     //rxJava
     implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    //rxAndroid
     implementation 'io.reactivex:rxandroid:1.2.0'
+    //万能Adapter
+    implementation 'com.zhy:base-adapter:2.0.0'
 }

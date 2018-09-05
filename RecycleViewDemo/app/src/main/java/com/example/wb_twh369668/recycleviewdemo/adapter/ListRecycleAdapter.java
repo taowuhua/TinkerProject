@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.wb_twh369668.recycleviewdemo.R;
 import com.example.wb_twh369668.recycleviewdemo.service.entity.Book;
@@ -17,43 +18,71 @@ import java.util.List;
  * creat by TWH on 2018/9/5
  */
 public class ListRecycleAdapter extends RecyclerView.Adapter<ListRecycleAdapter.ListRecycleViewHolder> {
-    private static final String TAG = "ListRecycleAdapter";
+    private static final String TAG = "RecycleAdapter";
     private Context mContext;
-    private List<Book> list;
+    private List<Book.BooksBean.TagsBean> tag;
+    private String name;
     private int count;
     private String title;
-    private String name;
-    int i = 0;
 
-    public ListRecycleAdapter(Context mContext, List<Book> list) {
+    public ListRecycleAdapter(Context mContext, List<Book.BooksBean.TagsBean> tag) {
         this.mContext = mContext;
-        this.list = list;
+        this.tag = tag;
     }
 
+    //在Adapter中重写该方法，根据条件返回不同的值然后在onBindViewHolder里面进行布局设置
+    @Override
+    public int getItemViewType(int position) {
+        if (position == 2) {
+            return 100;
+        } else {
+            return super.getItemViewType(position);
+        }
+    }
+
+    //viewholder 布局代码
     @Override
     public ListRecycleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ListRecycleViewHolder holder = new ListRecycleViewHolder(LayoutInflater.from(mContext).
                 inflate(R.layout.item_list, parent, false));
+
         return holder;
     }
 
+    //数据处理代码
     @Override
-    public void onBindViewHolder(ListRecycleViewHolder holder, int position) {
-        for (int i = 0; i < list.get(position).getBooks().get(position).getTags().size(); i++) {
-            count = list.get(position).getBooks().get(position).getTags().get(i).getCount();
-            title = list.get(position).getBooks().get(position).getTags().get(i).getTitle();
-            name = list.get(position).getBooks().get(position).getTags().get(i).getName();
-            Log.i(TAG, "onBindViewHolder: ===" + count + "");
-            Log.i(TAG, "onBindViewHolder: ===" + name);
-            holder.mTv1.setText(count + "");
-            holder.mTv2.setText(name);
-            Log.i(TAG, "onBindViewHolder: ====" + i + "");
+    public void onBindViewHolder(final ListRecycleViewHolder holder, int position) {
+        name = tag.get(position).getName();
+        count = tag.get(position).getCount();
+        title = tag.get(position).getTitle();
+        holder.mTv1.setText(count + "");
+        holder.mTv2.setText(title);
+        Log.i(TAG, "onBindViewHolder: ===" + title);
+        Log.i(TAG, "onBindViewHolder: ===" + count);
+        //自定义点击事件和长按事件
+        if (mOnItemClickListener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int layoutPosition = holder.getLayoutPosition();//避免添加item时不刷新item索引
+                    mOnItemClickListener.onItemClick(holder.itemView, layoutPosition);
+                }
+            });
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    int layoutPosition = holder.getLayoutPosition();//避免添加item时不刷新item索引
+                    mOnItemClickListener.onItemLongClick(holder.itemView, layoutPosition);
+                    return true;
+                }
+            });
         }
+
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return tag.size();
     }
 
     //TODO 理解RecyclerView.ViewHolder
@@ -66,6 +95,40 @@ public class ListRecycleAdapter extends RecyclerView.Adapter<ListRecycleAdapter.
             mTv1 = itemView.findViewById(R.id.tv1);
             mTv2 = itemView.findViewById(R.id.tv2);
         }
+    }
+
+    /**
+     * 点击和长按监听
+     */
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+
+        void onItemLongClick(View view, int position);
+    }
+
+    private OnItemClickListener mOnItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mOnItemClickListener = listener;
+    }
+
+
+    /**
+     * 添加 item
+     */
+    public void addItem(int position) {
+//        tag.add(position, "添加了数据");
+        notifyItemInserted(position);//切记不要写成notifyDataSetChanged()
+    }
+
+    /**
+     * 删除item
+     */
+    public void removeItem(int position) {
+        tag.remove(position);
+        Toast.makeText(mContext, "删除成功", Toast.LENGTH_SHORT).show();
+        notifyItemRemoved(position);//切记不要写成notifyDataSetChanged()
+//        notifyDataSetChanged();
     }
 
 }

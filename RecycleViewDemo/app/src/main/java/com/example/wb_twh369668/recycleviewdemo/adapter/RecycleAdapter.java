@@ -30,11 +30,31 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
         this.tag = tag;
     }
 
+    //在Adapter中重写该方法，根据条件返回不同的值然后在onBindViewHolder里面进行布局设置
+    @Override
+    public int getItemViewType(int position) {
+        if (position%2==1) {
+            return 100;
+        } else {
+            return super.getItemViewType(position);
+        }
+    }
+
     //viewholder 布局代码
     @Override
     public RecycleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        RecycleViewHolder holder = new RecycleViewHolder(LayoutInflater.from(mContext).
-                inflate(R.layout.item_list, parent, false));
+//        RecycleViewHolder holder = new RecycleViewHolder(LayoutInflater.from(mContext).
+//                inflate(R.layout.item_list, parent, false));
+        RecycleViewHolder holder = null;
+        switch (viewType) {
+            //示例逻辑
+            case 100:
+                holder = new RecycleViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_list_viewtype, parent, false));
+                break;
+            default:
+                holder = new RecycleViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_list, parent, false));
+                break;
+        }
 
         return holder;
     }
