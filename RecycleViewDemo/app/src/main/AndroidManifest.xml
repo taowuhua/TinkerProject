@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.UniversalAdapterActivity" />
-        <activity android:name=".ui.MoveAndswipItemActivity"></activity>
+        <activity android:name=".ui.MoveAndswipItemActivity" />
+        <activity android:name=".ui.FreshItemActivity"></activity>
     </application>
 
 </manifest>

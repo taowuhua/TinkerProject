@@ -36,6 +36,8 @@ public class MainActivity extends Activity {
     private Button mBtList;
     private Button mBtUniversalAdapter;
     private Button mGetMoveAndSwipActivity;
+    private boolean isLoading = false;
+    private Button mBtFresh;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -47,6 +49,7 @@ public class MainActivity extends Activity {
         mBtUniversalAdapter = findViewById(R.id.bt_adapter);
         mSwipeRefreshLayout = findViewById(R.id.swipe_refresh);
         mGetMoveAndSwipActivity = findViewById(R.id.bt_getMoveAndSwipActivity);
+        mBtFresh = findViewById(R.id.bt_freshActivity);
 
         mBtList.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +68,13 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MoveAndswipItemActivity.class);
+                startActivity(intent);
+            }
+        });
+        mBtFresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,FreshItemActivity.class);
                 startActivity(intent);
             }
         });
@@ -137,6 +147,26 @@ public class MainActivity extends Activity {
                 listRecycleAdapter.removeItem(position);//长按删除
             }
         });
+
+//        //上拉加载
+//        mRcyV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//                int totalItemCount = mGridLayoutMgr.getItemCount();
+//                int lastVisibleItemPos = mGridLayoutMgr.findLastCompletelyVisibleItemPosition();
+//                // 加1是position和size的区别
+//                if (!isLoading && totalItemCount <= (lastVisibleItemPos + 1)) {
+//                    loadMoreData();
+//                    isLoading = true;
+//                }
+//            }
+//
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//            }
+//        });
         mRcyV.setAdapter(listRecycleAdapter);
     }
 
@@ -159,5 +189,34 @@ public class MainActivity extends Activity {
         super.onDestroy();
         mBookPresenter.onStop();
     }
+
+    // 模拟加载数据过程
+//    private void loadMoreData() {
+//         final Book.BooksBean.TagsBean student  = new Book.BooksBean.TagsBean();
+//        final List<Book.BooksBean.TagsBean>list = new ArrayList<Book.BooksBean.TagsBean>();
+//        listRecycleAdapter.notifyItemInserted(list.size() - 1);
+//
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                // 加载过程结束后,记得清除最后一个标志位
+//                list.remove(list.size() - 1);
+//                listRecycleAdapter.notifyItemRemoved(list.size());
+//
+//                // 获取新增数据
+//                int start = list.size();
+//                int end = start + 4;
+//                for (int i = start; i < end; i++) {
+//                    student.setCount(i);
+//                    student.setTitle("我在添加数据"+i);
+//                    list.add(student);
+//                }
+//
+//                // 更新列表
+//                listRecycleAdapter.notifyDataSetChanged();
+//                isLoading = false;
+//            }
+//        }, 2000);
+//    }
 
 }
