@@ -18,7 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.UniversalAdapterActivity"></activity>
+        <activity android:name=".ui.UniversalAdapterActivity" />
+        <activity android:name=".ui.MoveAndswipItemActivity"></activity>
     </application>
 
 </manifest>

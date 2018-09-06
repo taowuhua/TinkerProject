@@ -7,25 +7,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.wb_twh369668.recycleviewdemo.R;
+import com.example.wb_twh369668.recycleviewdemo.interfaces.ItemTouchHelperAdapterListener;
 import com.example.wb_twh369668.recycleviewdemo.service.entity.Book;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
  * creat by TWH on 2018/9/5
  */
-public class ListRecycleAdapter extends RecyclerView.Adapter<ListRecycleAdapter.ListRecycleViewHolder> {
+public class MoveItemRecycleAdapter extends RecyclerView.Adapter<MoveItemRecycleAdapter.ListRecycleViewHolder> implements ItemTouchHelperAdapterListener {
     private static final String TAG = "RecycleAdapter";
     private Context mContext;
     private List<Book.BooksBean.TagsBean> tag;
     private String name;
     private int count;
     private String title;
-
-    public ListRecycleAdapter(Context mContext, List<Book.BooksBean.TagsBean> tag) {
+    public MoveItemRecycleAdapter(Context mContext, List<Book.BooksBean.TagsBean> tag) {
         this.mContext = mContext;
         this.tag = tag;
     }
@@ -85,6 +85,23 @@ public class ListRecycleAdapter extends RecyclerView.Adapter<ListRecycleAdapter.
         return tag.size();
     }
 
+    /**
+     * ItemTouchHelperAdapterCallBack的回调方法
+     * @param fromPosition
+     * @param desPosition
+     */
+    @Override
+    public void onItemMove(int fromPosition, int desPosition) {
+        Collections.swap(tag,fromPosition,desPosition);
+        //刷新位置交换
+        notifyItemMoved(fromPosition, desPosition);
+    }
+
+    @Override
+    public void onItemSwip(int position) {
+
+    }
+
     //TODO 理解RecyclerView.ViewHolder
     class ListRecycleViewHolder extends RecyclerView.ViewHolder {
         public TextView mTv1;
@@ -110,24 +127,6 @@ public class ListRecycleAdapter extends RecyclerView.Adapter<ListRecycleAdapter.
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.mOnItemClickListener = listener;
-    }
-
-
-    /**
-     * 添加 item
-     */
-    public void addItem(int position) {
-//        tag.add(position, "添加了数据");
-        notifyItemInserted(position);//切记不要写成notifyDataSetChanged()
-    }
-
-    /**
-     * 删除item
-     */
-    public void removeItem(int position) {
-        tag.remove(position);
-        Toast.makeText(mContext, "删除成功", Toast.LENGTH_SHORT).show();
-        notifyItemRemoved(position);//切记不要写成notifyDataSetChanged()
     }
 
 }

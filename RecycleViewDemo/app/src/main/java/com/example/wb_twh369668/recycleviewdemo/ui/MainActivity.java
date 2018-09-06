@@ -35,6 +35,7 @@ public class MainActivity extends Activity {
     private Book book;
     private Button mBtList;
     private Button mBtUniversalAdapter;
+    private Button mGetMoveAndSwipActivity;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -45,6 +46,7 @@ public class MainActivity extends Activity {
         mBtList = findViewById(R.id.bt_list);
         mBtUniversalAdapter = findViewById(R.id.bt_adapter);
         mSwipeRefreshLayout = findViewById(R.id.swipe_refresh);
+        mGetMoveAndSwipActivity = findViewById(R.id.bt_getMoveAndSwipActivity);
 
         mBtList.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +58,13 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, UniversalAdapterActivity.class);
+                startActivity(intent);
+            }
+        });
+        mGetMoveAndSwipActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MoveAndswipItemActivity.class);
                 startActivity(intent);
             }
         });
@@ -136,7 +145,7 @@ public class MainActivity extends Activity {
         public void onSuccess(Book mBook) {
             book = mBook;
 //            initRecycleView();
-          initListRecycleView();
+            initListRecycleView();
         }
 
         @Override
