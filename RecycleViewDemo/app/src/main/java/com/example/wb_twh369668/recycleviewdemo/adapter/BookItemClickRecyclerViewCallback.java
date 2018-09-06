@@ -2,6 +2,7 @@ package com.example.wb_twh369668.recycleviewdemo.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.widget.Toast;
 
 import com.example.wb_twh369668.recycleviewdemo.interfaces.ItemTouchHelperAdapterListener;
 
@@ -99,7 +100,7 @@ public class BookItemClickRecyclerViewCallback extends ItemTouchHelper.Callback 
      */
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-
+        itemTouchHelperAdapterListener.onItemSwip(direction);
     }
     /**
      * 要支持长按RecyclerView item进入拖动操作，
@@ -122,5 +123,6 @@ public class BookItemClickRecyclerViewCallback extends ItemTouchHelper.Callback 
 
         return true;//返回true表示支持左右滑动
     }
+
 
 }

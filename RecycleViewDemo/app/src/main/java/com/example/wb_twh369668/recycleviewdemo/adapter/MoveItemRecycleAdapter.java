@@ -25,6 +25,7 @@ public class MoveItemRecycleAdapter extends RecyclerView.Adapter<MoveItemRecycle
     private String name;
     private int count;
     private String title;
+
     public MoveItemRecycleAdapter(Context mContext, List<Book.BooksBean.TagsBean> tag) {
         this.mContext = mContext;
         this.tag = tag;
@@ -87,19 +88,21 @@ public class MoveItemRecycleAdapter extends RecyclerView.Adapter<MoveItemRecycle
 
     /**
      * ItemTouchHelperAdapterCallBack的回调方法
+     *
      * @param fromPosition
      * @param desPosition
      */
     @Override
     public void onItemMove(int fromPosition, int desPosition) {
-        Collections.swap(tag,fromPosition,desPosition);
+        Collections.swap(tag, fromPosition, desPosition);
         //刷新位置交换
         notifyItemMoved(fromPosition, desPosition);
     }
 
     @Override
     public void onItemSwip(int position) {
-
+        tag.remove(position);
+        notifyDataSetChanged();
     }
 
     //TODO 理解RecyclerView.ViewHolder
