@@ -3,3 +3,5 @@
 可参考以下博客：热更新 ：https://blog.csdn.net/taowuhua0505/article/details/82380422
 recycleview：https://blog.csdn.net/taowuhua0505/article/details/82459628
             https://www.kancloud.cn/digest/fastdev4android/109670
+snackbar：https://blog.csdn.net/gaitiangai/article/details/52022867
+            http://www.jcodecraeer.com/plus/view.php?aid=3187
