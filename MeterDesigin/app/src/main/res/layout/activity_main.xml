@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ToolbarTheme"
+        app:navigationIcon="@mipmap/ic_launcher"
+        app:popupTheme="@mipmap/ic_launcher_round"
+        app:title="@string/app_title">
+
+        <EditText
+            android:id="@+id/edit_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/ordinaryButoon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="普通的snackBar" />
+
+            <Button
+                android:id="@+id/customButoon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="自定义的snackBar" />
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/customCallback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="自定义snackbar的回调" />
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+
+
+</LinearLayout>
+

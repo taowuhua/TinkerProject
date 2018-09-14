@@ -1,0 +1,125 @@
+package com.example.administrator.convenientbannerdemo;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
+import com.bigkoo.convenientbanner.holder.Holder;
+import com.bigkoo.convenientbanner.listener.OnItemClickListener;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements OnItemClickListener {
+
+    private ConvenientBanner convenientBanner;
+    private ArrayList<Integer> localImages = new ArrayList<Integer>();
+    private List<String> networkImages;
+    private String[] images = {"http://img2.3lian.com/2014/f2/37/d/40.jpg",
+            "http://d.3987.com/sqmy_131219/001.jpg",
+            "http://img2.3lian.com/2014/f2/37/d/39.jpg",
+            "http://www.8kmm.com/UploadFiles/2012/8/201208140920132659.jpg",
+            "http://f.hiphotos.baidu.com/image/h%3D200/sign=1478eb74d5a20cf45990f9df460b4b0c/d058ccbf6c81800a5422e5fdb43533fa838b4779.jpg",
+            "http://f.hiphotos.baidu.com/image/pic/item/09fa513d269759ee50f1971ab6fb43166c22dfba.jpg"
+    };
+    // protected ImageLoader imageLoader;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        convenientBanner = (ConvenientBanner) findViewById(R.id.convenientBanner);
+
+//        imageLoader = ImageLoader.getInstance();
+//        imageLoader.init(ImageLoaderConfiguration.createDefault(this));
+
+
+        //获取本地的图片
+        for (int position = 0; position < 7; position++) {
+            localImages.add(getResId("ic_test_" + position, R.drawable.class));
+        }
+
+        //开始自动翻页
+        convenientBanner.setPages(new CBViewHolderCreator() {
+            @Override
+            public Object createHolder() {
+                return new LocalImageHolderView();
+            }
+        }, localImages)
+                //设置指示器是否可见
+                .setPointViewVisible(true)
+                //设置自动切换（同时设置了切换时间间隔）
+                .startTurning(2000)
+                //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
+                .setPageIndicator(new int[]{R.drawable.ic_page_indicator, R.drawable.ic_page_indicator_focused})
+                //设置指示器的方向（左、中、右）
+                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT)
+                //设置点击监听事件
+                .setOnItemClickListener(this)
+                //设置手动影响（设置了该项无法手动切换）
+                .setManualPageable(true);
+
+
+        //设置翻页的效果，不需要翻页效果可用不设
+        //setPageTransformer(Transformer.DefaultTransformer);   // 集成特效之后会有白屏现象，新版已经分离，如果要集成特效的例子可以看Demo的点击响应。
+
+
+        //网络加载例子
+//        networkImages = Arrays.asList(images);
+//        convenientBanner.setPages(new CBViewHolderCreator<NetworkImageHolderView>() {
+//            @Override
+//            public NetworkImageHolderView createHolder() {
+//                return new NetworkImageHolderView();
+//            }
+//        },networkImages);
+    }
+
+    //图片的点击事件
+    @Override
+    public void onItemClick(int position) {
+        Toast.makeText(this, "position:" + position, Toast.LENGTH_SHORT).show();
+    }
+
+
+    //为了方便改写，来实现复杂布局的切换
+    private class LocalImageHolderView implements Holder<Integer> {
+        private ImageView imageView;
+
+        @Override
+        public View createView(Context context) {
+            //你可以通过layout文件来创建，不一定是Image，任何控件都可以进行翻页
+            imageView = new ImageView(context);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            return imageView;
+        }
+
+        @Override
+        public void UpdateUI(Context context, int position, Integer data) {
+            imageView.setImageResource(data);
+        }
+    }
+
+    /**
+     * 通过文件名获取资源id 例子：getResId("icon", R.drawable.class);
+     *
+     * @param variableName
+     * @param c
+     * @return
+     */
+    public static int getResId(String variableName, Class<?> c) {
+        try {
+            Field idField = c.getDeclaredField(variableName);
+            return idField.getInt(idField);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+}

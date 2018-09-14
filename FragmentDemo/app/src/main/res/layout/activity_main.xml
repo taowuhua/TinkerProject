@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.fragment.activity.MainActivity">
+
+    <Button
+        android:id="@+id/bt_staticFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="加载静态的fragment" />
+
+    <Button
+        android:id="@+id/bt_SysnFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="动态加载fragment" />
+
+    <Button
+        android:id="@+id/bt_twoFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="跳转到两个页卡的界面" />
+
+</LinearLayout>

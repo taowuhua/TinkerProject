@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!--always 任何情况都在toolbar显示-->
+    <!--ifRoom 当·toolbar·空间足够时，显示，不足时隐藏-->
+    <!--never 任何情况 不在toolbar上显示，点击在右上角的"更多"才能看见-->
+    <!--withText 图文（title+icon）显示-->
+    <!--collapseActionView 隐藏不直接显示-->
+
+    <item
+        android:id="@+id/item_setting"
+        android:title="设置选项"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/item_model"
+        android:title="夜间模式"
+        app:showAsAction="never" />
+</menu>
